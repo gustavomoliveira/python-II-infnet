@@ -1,13 +1,13 @@
 lista = [[1, 'Produto 1', 10], [2, 'Produto 2', 20], [3, 'Produto 3', 30]] # mutável, permite el repetido, existe ordenação
 lista[0][2] = 15
-print(lista)
+#print(lista)
 
 tupla = (1, 2, 3) # imutável, permite el repetido, existe ordenação
 #tupla[0] = 15
-print(tupla)
+#print(tupla)
 
 dic = {1: ['Produto 1', 10], 2: ['Produto 2', 20], 3: ['Produto 3', 30]} # mutável, permite el repetido com excessão das chaves, existe ordenação
-print(dic)
+#print(dic)
 
 # Conjunto
 # não permite el repetido

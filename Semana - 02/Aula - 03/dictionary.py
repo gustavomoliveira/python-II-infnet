@@ -11,6 +11,7 @@ if 'Gustavo' in agenda:
 
 print(agenda)
 print(agenda['Gustavo'])
+print(agenda.get('Gustavo'))
 
 def exibir_agenda(agenda):
    for contato in agenda:

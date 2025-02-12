@@ -35,6 +35,6 @@ def validar_preco(msg):
             if preco >= 0:
                 return preco
             else:
-                print('\nERRO: O não pode ser menor do que 0.')
+                print('\nERRO: O preço não pode ser menor do que 0.')
         except ValueError:
             print('\nERRO: Digite o valor referente a operação.')

@@ -28,7 +28,7 @@ def alterar_produto(produtos):
         preco = validar_preco('\nDigite o novo preço do Produto: ')
         produtos[chave][1] = quantidade
         produtos[chave][2] = preco
-        print(f'Produto -> {produtos[chave][0]} <- atualizado com sucesso! Nova quantidade: {produtos[chave][1]} | Novo preço: {produtos[chave][2]}.')
+        print(f'\nProduto -> {produtos[chave][0]} <- atualizado com sucesso! Nova quantidade: {produtos[chave][1]} | Novo preço: {produtos[chave][2]}.')
     else:
         print(f'\nNão existe um produto cadastrado com a chave: {chave}.')
     return produtos
@@ -36,7 +36,7 @@ def alterar_produto(produtos):
 def excluir_produto(produtos):
     chave = validar_chave('\nDigite a Chave do produto para realizar a exclusão: ')
     if chave in produtos:
-        print(f'\nO produto -> {produtos[chave][0]} <- foi removido com sucesso..')
+        print(f'\nO produto -> {produtos[chave][0]} <- foi removido com sucesso.')
         produtos.pop(chave)
     else:
         print(f'\nNão existe um produto cadastrado com a chave: {chave}.')
