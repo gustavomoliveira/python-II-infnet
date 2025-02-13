@@ -20,7 +20,8 @@ def iniciar_programa():
             case _:
                 print('\nERRO: Opção inválida.')
 
-iniciar_programa()
+if __name__ == '__main__':   
+    iniciar_programa()
 
 
 
