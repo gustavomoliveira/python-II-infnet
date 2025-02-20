@@ -1,8 +1,5 @@
 import os, json
 
-NOME = 0
-NOTA1 = 1
-NOTA2 = 2
 APROVACAO = 6
 
 def definir_arquivo(nome_arquivo):
@@ -23,7 +20,7 @@ def ler_arquivo(arq):
 def verificar_aprovacao(turma):
     aprovacao = []
     for aluno in turma:
-        media = round((aluno['nota1'] + aluno['nota2']) / 2, 1)
+        media = round(sum(aluno['notas']) / 2, 1)
         if media >= APROVACAO:
             aprovacao.append([aluno['nome'], media, 'Aprovado'])
         else:
@@ -33,13 +30,14 @@ def verificar_aprovacao(turma):
 def gravar_arquivo(arq, aprovacao):
     try:
         with open(arq, 'w', encoding='UTF-8') as arquivo:
-            arquivo.write(json.dumps(aprovacao, indent=4, ensure_ascii=False)) # dumps organiza o json no formato do arquivo do exemplo. o dump, não
-            print('Arquivo gravado com sucesso.')                              # ASCII=True por padrão
+            arquivo.write(json.dumps(aprovacao, indent=4, ensure_ascii=False))
+            print('Arquivo gravado com sucesso.')
     except:
         print('Erro na gravação do arquivo.')
 
 arquivo_entrada = definir_arquivo('turma.json')
 turma = ler_arquivo(arquivo_entrada)
 aprovacao = verificar_aprovacao(turma)
+print(aprovacao)
 arquivo_saida = definir_arquivo('aprovacao.json')
 gravar_arquivo(arquivo_saida, aprovacao)
