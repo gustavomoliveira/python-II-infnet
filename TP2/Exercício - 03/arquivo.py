@@ -15,12 +15,10 @@ def ler_arquivo(arq):
         exit()
     return produtos
 
-def reajustar_preco(produtos, percentual):
-    for produto in produtos:
-        produto['preço'] *= round(1 + (percentual / 100), 2)
-    return produtos
-
-arquivo_entrada = definir_arquivo('produtos.json')
-produtos = ler_arquivo(arquivo_entrada)
-produtos_ajustado = reajustar_preco(produtos, 5)
-print(produtos_ajustado)
+def gravar_arquivo(arq, produtos):
+    try:
+        with open(arq, 'w', encoding='UTF-8') as arquivo:
+            arquivo.write(json.dumps(produtos, indent=4, ensure_ascii=False))
+            print('Arquivo gravado com sucesso.')
+    except:
+        print('Erro na gravação do arquivo.')
