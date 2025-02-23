@@ -1,0 +1,27 @@
+[
+    {
+        "nome":"LP",
+        "media":5.5,
+        "status":"Prova Final"
+    },
+    {
+        "nome":"Maria",
+        "media":7.5,
+        "status":"Aprovado"
+    },
+    {
+        "nome":"Felipe",
+        "media":7.5,
+        "status":"Aprovado"
+    },
+    {
+        "nome":"Luiza",
+        "media":8.0,
+        "status":"Aprovado"
+    },
+    {
+        "nome":"João",
+        "media":8.0,
+        "status":"Aprovado"
+    }
+]
