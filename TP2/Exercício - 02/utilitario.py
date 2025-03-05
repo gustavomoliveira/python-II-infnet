@@ -1,4 +1,4 @@
-from constantes import *
+from arquivo import PRECO
 
 def reajustar_preco(produtos, percentual):
     for produto in produtos:

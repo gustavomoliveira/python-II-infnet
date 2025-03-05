@@ -1,5 +1,9 @@
 import os, csv
-from constantes import *
+
+ID = 0
+NOME = 1
+QTDE = 2
+PRECO = 3
 
 def definir_arquivo(nome_arquivo):
     diretorio = os.path.dirname(__file__)
