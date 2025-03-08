@@ -3,15 +3,15 @@ from conectar_db import *
 
 APROVACAO = 6
 
-def ler_banco(banco):
+def ler_banco():
     sql = 'SELECT * FROM aluno'
     try:
-        engine = conectar(banco)
+        engine = conectar()
         df_turma = pd.read_sql(sql, engine)
     except Exception as ex:
         print(f'Erro na abertura do arquivo: {ex}.')
         exit()
-    finally: # certo ou errado, finally é executado
+    finally:
         desconectar(engine)
     return df_turma
 
@@ -25,9 +25,9 @@ def verificar_aprovacao(df_turma):
             df_aprovacao.loc[len(df_aprovacao)] = [aluno['nome'], media, 'Prova Final']
     return df_aprovacao
 
-def gravar_aprovacao(banco, df_aprovacao):
+def gravar_aprovacao(df_aprovacao):
     try:
-        engine = conectar(banco)
+        engine = conectar()
         df_aprovacao.to_sql('aprovacao', engine, if_exists='replace', index=False)
         print('Arquivo gravado com sucesso.')
     except:
@@ -35,11 +35,9 @@ def gravar_aprovacao(banco, df_aprovacao):
     finally:
         desconectar(engine)
 
-banco = definir_banco('turma.db')
-verificar_banco(banco)
-df_turma = ler_banco(banco)
+df_turma = ler_banco()
 print(df_turma)
 print(df_turma.dtypes)
 df_aprovacao = verificar_aprovacao(df_turma)
 print(df_aprovacao)
-gravar_aprovacao(banco, df_aprovacao)
+gravar_aprovacao(df_aprovacao)

@@ -6,11 +6,20 @@ def definir_banco(nome_banco):
     banco = os.path.join(diretorio_corrente, nome_banco)
     return banco
 
+def verificar_banco(banco): # SQLite - verifica a existência do banco
+    if not os.path.exists(banco):
+        print('Erro: banco não existe.')
+        exit()
+
 def conectar(banco):
     try:
         engine = create_engine('sqlite:///' + banco)
         print('Banco conectado.')
     except Exception as ex:
-        print(f'Erro ao conectar o banco: {ex}')
+        print(f'Erro ao conectar o banco: {ex}.')
         exit()
     return engine
+
+def desconectar(engine):
+    if engine:
+        engine.dispose()
