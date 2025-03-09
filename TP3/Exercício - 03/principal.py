@@ -6,7 +6,6 @@ def ler_banco(banco):
     try:
         engine = conectar(banco)
         df_produtos = pd.read_sql(sql, engine)
-        df_produtos['preco'] = df_produtos['preco'].astype(float)
     except Exception as ex:
         print(f'Erro na abertura do arquivo: {ex}.')
         exit()
