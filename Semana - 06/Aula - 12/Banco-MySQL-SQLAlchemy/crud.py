@@ -19,7 +19,7 @@ def consultar_conta():
 def incluir_conta():
     nome = entrar_nome()
     saldo = entrar_saldo()
-    conta = Conta(None, nome, saldo)
+    conta = Conta(None, nome, saldo) # o None é para gerar o autoincremento do id
     incluir_conta_db(conta)
 
 def excluir_conta():
@@ -28,7 +28,7 @@ def excluir_conta():
     if (not conta):
         print("Erro: conta não existe")
         return
-    excluir_conta_db(id)
+    excluir_conta_db(conta)
 
 def alterar_conta():
     id = entrar_id()
