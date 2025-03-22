@@ -45,9 +45,16 @@ def exibir_linguagem_menos_usada(df):
     print(df[df['Ratings'] == df['Ratings'].min()].to_string(index=False)) # linguagem menos usada, sem o index
 
 def linguagens_subiram(df):
-    print('\nLinguagens que aumentara mem popularidade:')
-    df_subiram = df[df['Mar 2025'] < df['Mar 2024']].head(5).to_string(index=False) # o top 5 de linguagens que subiram
+    print('\nLinguagens que aumentaram em popularidade:')
+    df_subiram = df[df['Mar 2025'] < df['Mar 2024']].to_string(index=False)
     print(df_subiram)
+
+def top_5_linguagens(df_original):
+    print('\nTop 5 Linguagens que mais subiram no ranking:')
+    df = df_original.copy() # copiando o df original
+    df['Diferenca'] = (df['Mar 2024'] - df['Mar 2025'])
+    df = df.sort_values(by=['Diferenca'], ascending=False).head(5) # ordenando pela coluna Diferença usando pandas
+    print(df[['Language', 'Diferenca']].to_string(index=False))
 
 html = acessar_url()
 bs = BeautifulSoup(html, 'html.parser')
@@ -60,3 +67,4 @@ exibir_numero_linguagens(df)
 exibir_linguagem_mais_usada(df)
 exibir_linguagem_menos_usada(df)
 linguagens_subiram(df)
+top_5_linguagens(df)
