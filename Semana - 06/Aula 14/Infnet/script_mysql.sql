@@ -12,15 +12,15 @@ CREATE TABLE aluno (
 CREATE TABLE endereco (
     id_endereco INT PRIMARY KEY auto_increment,
     rua VARCHAR(50) NOT NULL,
-    id_aluno_fk INT NOT NULL UNIQUE,
-    FOREIGN KEY (id_aluno_fk) REFERENCES aluno(id_aluno)
+    id_aluno INT NOT NULL UNIQUE,
+    FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
 );
 
 CREATE TABLE email (
     id_email INT PRIMARY KEY auto_increment,
     mail VARCHAR(50) NOT NULL,
-    id_aluno_fk INT NOT NULL,
-    FOREIGN KEY (id_aluno_fk) REFERENCES aluno(id_aluno)
+    id_aluno INT NOT NULL,
+    FOREIGN KEY (id_aluno) REFERENCES aluno(id_aluno)
 );
 
 CREATE TABLE disciplina (
