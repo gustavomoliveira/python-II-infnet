@@ -8,8 +8,8 @@ class Aluno(Base):
     
     id_aluno = Column(Integer, primary_key=True)
     nome_aluno = Column(String)
-    endereco = relationship('Endereco', uselist=False) # uselist é o que define o relacionamento 1,1
-    emails = relationship('Email') # sem uselist, relação 1,n
+    endereco = relationship('Endereco', uselist=False, cascade='all, delete') # uselist é o que define o relacionamento 1,1
+    emails = relationship('Email', cascade='all, delete') # sem uselist, relação 1,n
     disciplinas = relationship('Disciplina', secondary='aluno_disciplina', back_populates='alunos')
 
     def __init__(self, nome): # não precisa do id já que é autoincrement
@@ -64,7 +64,7 @@ class Disciplina(Base):
 class AlunoDisciplina(Base):
     __tablename__ = 'aluno_disciplina'
 
-    id_aluno = Column(Integer, ForeignKey('aluno.id_aluno'), primary_key=True)
+    id_aluno = Column(Integer, ForeignKey('aluno.id_aluno', ondelete='Cascade'), primary_key=True) # ondelete cascade para não apagar as disciplinas
     id_disciplina = Column(Integer, ForeignKey('disciplina.id_disciplina'), primary_key=True)
 
     def __init__(self, id_aluno, id_disciplina):

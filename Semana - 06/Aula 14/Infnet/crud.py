@@ -37,6 +37,25 @@ def consultar_alunos():
     finally:
         desconectar(session)
 
+def consultar_aluno(id):
+    session = conectar()
+    try:
+        aluno = session.get(Aluno, id)
+        if aluno:
+            print(aluno)
+            if aluno.endereco:
+                print(aluno.endereco)
+            for email in aluno.emails:
+                print(email)
+            for disciplina in aluno.disciplinas:
+                print(disciplina)
+        else:
+            print('Aluno não encontrado.')
+    except Exception as ex:
+        print(f'Erro ao conectar: {ex}.')
+    finally:
+        desconectar(session)
+
 def incluir_disciplinas():
     session = conectar()
     try:
@@ -55,6 +74,20 @@ def incluir_aluno_disciplina():
         session.add(AlunoDisciplina(2, 1))
         session.add(AlunoDisciplina(3, 1))
         session.add(AlunoDisciplina(3, 2))
+    except Exception as ex:
+        print(f'Erro ao conectar: {ex}.')
+    finally:
+        desconectar(session)
+
+def excluir_aluno(id):
+    session = conectar()
+    try:
+        aluno = session.get(Aluno, id)
+        if aluno:
+            session.delete(aluno)
+            session.commit()
+        else:
+            print('Aluno não encontrado.')
     except Exception as ex:
         print(f'Erro ao conectar: {ex}.')
     finally:
