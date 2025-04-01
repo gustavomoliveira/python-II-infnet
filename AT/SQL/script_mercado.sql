@@ -1,26 +1,26 @@
 CREATE DATABASE IF NOT EXISTS mercado_at;
 USE mercado_at;
 
-DROP TABLE IF EXISTS cliente;
-DROP TABLE IF EXISTS produto;
-DROP TABLE IF EXISTS compra;
 DROP TABLE IF EXISTS item;
+DROP TABLE IF EXISTS compra;
+DROP TABLE IF EXISTS produto;
+DROP TABLE IF EXISTS cliente;
 
 CREATE TABLE cliente (
     id_cliente INT PRIMARY KEY AUTO_INCREMENT,
-    nome CHAR(50) NOT NULL
+    nome VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE produto (
     id_produto INT PRIMARY KEY AUTO_INCREMENT,
-    nome CHAR(50) NOT NULL,
+    nome VARCHAR(50) NOT NULL,
     quantidade INT NOT NULL,
-    preco REAL NOT NULL
+    preco DECIMAL(10,2) NOT NULL
 );
 
 CREATE TABLE compra (
     id_compra INT PRIMARY KEY AUTO_INCREMENT,
-    data_compra CHAR(50) NOT NULL,
+    data_compra VARCHAR(50) NOT NULL,
     id_cliente INT NOT NULL,
     FOREIGN KEY (id_cliente) REFERENCES cliente(id_cliente)
 );
