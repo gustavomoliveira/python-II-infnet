@@ -1,25 +1,15 @@
 from base_dados import *
-from interface import *
+from atendimento import *
+from UTIL.util import *
+from CRUD.crud_produto import consultar_tamanho_produtos, consultar_estoque_final
 
 def abrir_caixa():
-    resultado = consultar_tamanho_produtos()
-    if resultado == 0:
-        arq_produtos = definir_arquivo('CSV/produtos.csv')
-        arq_clientes = definir_arquivo('CSV/clientes.csv')
-
-        df_produtos = criar_df(arq_produtos)
-        df_clientes = criar_df(arq_clientes)
-
-        query_produtos = """ INSERT INTO mercado_at.produto (nome, quantidade, preco)
-            VALUES (%s, %s, %s) """
-        importar_dados_iniciais(df_produtos, query_produtos)
-
-        query_clientes = """ INSERT INTO mercado_at.cliente (nome)
-            VALUES (%s) """
-        importar_dados_iniciais(df_clientes, query_clientes)
+    if consultar_tamanho_produtos() == 0:
+        carregar_dados_iniciais()
 
     total_vendas = []
     clientes_atendidos = []
+    
     while True:
         opcao = menu()
         match opcao:

@@ -7,3 +7,14 @@ def conectar_bd():
         password='',
         database='mercado_at'
     )
+
+def abrir_conexao_bd():
+    conn = conectar_bd()
+    cursor = conn.cursor()
+    return conn, cursor
+
+def desconectar_bd(conn, cursor):
+    if cursor:
+        cursor.close()
+    if conn and conn.is_connected():
+        conn.close()
