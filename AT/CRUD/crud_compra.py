@@ -12,11 +12,3 @@ def consultar_compra_atual():
         return False
     else:
         return compra
-    
-def consultar_compras():
-    compras = consultar_compras_bd()
-    if not compras:
-        print('\nCompras não encontrada no sistema.')
-        return False
-    else:
-        return compras

@@ -11,18 +11,6 @@ def validar_inteiro(msg):
         except ValueError:
             print('\nERRO: Digite apenas números inteiros positivos.')
 
-def validar_escolha(msg):
-    while True:
-        try:
-            escolha = int(input(msg))
-            if escolha in (1, 2):
-                return escolha
-            else:
-                print(f'\nERRO: Valor inserido "{escolha}" é inválido.')
-                print('\nSelecione "1" para "Sim" ou "2" para "Não".')
-        except ValueError:
-            print('\nERRO: Digite um número inteiro (1 ou 2).')
-
 def validar_opcao(msg):
     while True:
         try:
@@ -34,18 +22,17 @@ def validar_opcao(msg):
         except ValueError:
             print('\nERRO: Digite um número entre 0 e 2 para selecionar uma opção.')
 
-def validar_nome(msg):
+def validar_escolha(msg):
     while True:
         try:
-            padrao = r'^[A-Za-z]{7} \d+$'
-            nome = input(msg).title()
-            if bool(re.fullmatch(padrao, nome)):
-                return nome
+            escolha = int(input(msg))
+            if escolha in (1, 2):
+                return escolha
             else:
-                print(f'\nERRO: O nome inserido deve seguir o padrão do exemplo abaixo:')
-                print(f'\n"abcdefg 1" --> 7 letras, 1 espaço, N números.')
+                print(f'\nERRO: Valor inserido "{escolha}" é inválido.')
+                print('\nSelecione "1" para "Sim" ou "2" para "Não".')
         except ValueError:
-            print('\nERRO: Digite um nome válido.')
+            print('\nERRO: Digite um número inteiro (1 ou 2).')
 
 def validar_quantidade(msg):
     while True:
@@ -68,3 +55,16 @@ def validar_preco(msg):
                 print('\nERRO: O preço cadastrado deve ser maior que 0.')
         except ValueError:
             print('\nERRO: O preço deve ser um número.')
+
+def validar_nome(msg):
+    while True:
+        try:
+            padrao = r'^[A-Za-z]{7} \d+$'
+            nome = input(msg).title()
+            if bool(re.fullmatch(padrao, nome)):
+                return nome
+            else:
+                print(f'\nERRO: O nome inserido deve seguir o padrão do exemplo abaixo:')
+                print(f'\n"abcdefg 1" --> 7 letras, 1 espaço, N números.')
+        except ValueError:
+            print('\nERRO: Digite um nome válido.')

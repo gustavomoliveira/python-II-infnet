@@ -13,7 +13,7 @@ def iniciar_atendimento():
     if not cliente:
         cliente = processar_cliente_inexistente()
         if cliente is None:
-            return 0, None
+            return
 
     print(f'\n===== Atendimento iniciado para o {cliente[1]} =====')
 
@@ -21,7 +21,7 @@ def iniciar_atendimento():
 
     if not produtos_pedido:
         print('\nNenhum produto foi adicionado ao pedido.')
-        return 0, cliente
+        return
 
     print(f'\nA compra do {cliente[1]} foi concluída com sucesso! Retornando ao menu inicial.')
 
@@ -29,27 +29,21 @@ def iniciar_atendimento():
     compra_atual = consultar_compra_atual()
 
     organizar_produtos(produtos_pedido, compra_atual)
-    soma_total = finalizar_atendimento(cliente, compra_atual)
-
-    return soma_total, cliente
+    finalizar_atendimento(cliente, compra_atual)
             
 def finalizar_atendimento(cliente, compra):
-    produtos = []
     tabela_resumida = []
     soma_total = 0
-    itens = consultar_item(compra)
     
-    for item in itens:
-        id_produto = item[-1]
-        produto = consultar_produto(id_produto)
-        produtos.append(produto)
+    itens_detalhados = consultar_resumo_compra_bd(compra[0])
     
-    qtde_items = consultar_qtde_items(compra)
-
-    for i, (produto, item) in enumerate(zip(produtos, itens), start=1):
-        total = produto[3] * item[1]
-        soma_total += total
-        tabela_resumida.append([i, produto[1], item[1], produto[3], total])
+    for i, item in enumerate(itens_detalhados, start=1):
+        nome_produto = item[0]
+        quantidade = item[1]
+        preco = item[2]
+        subtotal = item[3]
+        soma_total += subtotal
+        tabela_resumida.append([i, nome_produto, quantidade, preco, subtotal])
 
     colunas_tabela = ['Item', 'Produto', 'Qtde', 'Preço', 'Total']
 
@@ -59,14 +53,12 @@ def finalizar_atendimento(cliente, compra):
 
     print(tabulate(tabela_resumida, headers=colunas_tabela))
 
-    print(f'\nItens: {qtde_items}')
+    print(f'\nItens: {len(itens_detalhados)}')
     print(f'Total: R${int(soma_total)}\n')
     print('===========================================\n')
 
-    return soma_total
-
-def exibir_estoque(estoque):
-    sem_estoque = [produto for produto in estoque if produto[1] == 0]
+def exibir_estoque():
+    sem_estoque = consultar_produtos_sem_estoque_bd()
     
     if sem_estoque:
         print('\n===========================================\n')
@@ -78,25 +70,18 @@ def exibir_estoque(estoque):
     
     print('\n===========================================')
     
-def fechar_caixa(total_vendas, clientes_atendidos):
-    dados_caixa_fechado = []
-    clientes_validos = []
-
+def fechar_caixa():
     print('\n===========================================\n')
     print('Fechamento do Caixa')
     print(f'Data: {validar_data_hora()}\n')
-
-    for cliente, total in zip(clientes_atendidos, total_vendas):
-        if cliente is not None:
-            clientes_validos.append((cliente, total))
-
-    for cliente, total in clientes_validos:
-        dados_caixa_fechado.append([cliente[1], total])
-        
-    if dados_caixa_fechado:
-        print(tabulate(dados_caixa_fechado, headers=['Cliente', 'Total']))
-        print(f'\nTotal de Vendas: R${int(sum(total_vendas))}')
+    
+    dados_caixa = consultar_resumo_diario_bd()
+    
+    if dados_caixa:
+        print(tabulate(dados_caixa, headers=['Cliente', 'Total']))
+        total_vendas = sum(item[1] for item in dados_caixa)
+        print(f'\nTotal de Vendas: R${int(total_vendas)}')
         print('\n===========================================\n')
-        exibir_estoque(consultar_estoque_final())
+        exibir_estoque()
     else:
         print('Não houveram vendas neste Caixa durante o dia de hoje.\n')

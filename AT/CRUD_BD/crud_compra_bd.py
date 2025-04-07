@@ -29,15 +29,43 @@ def consultar_compra_atual_bd():
     finally:
         desconectar_bd(conn, cursor)
 
-def consultar_compras_bd():
+def consultar_resumo_compra_bd(id_compra):
     conn, cursor = None, None
     try:
         conn, cursor = abrir_conexao_bd()
-        query = 'SELECT * FROM mercado_at.compra;'
-        cursor.execute(query)
-        compras = cursor.fetchall()
-        return compras
+        query = '''
+            SELECT p.nome, i.quantidade, p.preco, (i.quantidade * p.preco) as subtotal  
+            FROM mercado_at.item i
+            JOIN mercado_at.produto p ON i.id_produto = p.id_produto
+            WHERE i.id_compra = %s
+        '''
+        cursor.execute(query, (id_compra,))
+        itens = cursor.fetchall()
+        return itens
     except Error as e:
-        print(f'\nERRO: Não foi possível realizar a busca: {e}.')
+        print(f'\nERRO: Não foi possível realizar a consulta: {e}.')
+        return []
+    finally:
+        desconectar_bd(conn, cursor)
+
+def consultar_resumo_diario_bd():
+    conn, cursor = None, None
+    try:
+        conn, cursor = abrir_conexao_bd()
+        query = '''
+            SELECT cl.nome, SUM(p.preco * i.quantidade) as total
+            FROM mercado_at.compra c
+            JOIN mercado_at.cliente cl ON c.id_cliente = cl.id_cliente
+            JOIN mercado_at.item i ON c.id_compra = i.id_compra
+            JOIN mercado_at.produto p ON i.id_produto = p.id_produto
+            GROUP BY cl.nome
+            ORDER BY total DESC
+        '''
+        cursor.execute(query)
+        resumo = cursor.fetchall()
+        return resumo
+    except Error as e:
+        print(f'\nERRO: Não foi possível realizar a consulta: {e}.')
+        return []
     finally:
         desconectar_bd(conn, cursor)

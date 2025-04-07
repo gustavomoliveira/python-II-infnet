@@ -20,7 +20,8 @@ def incluir_cliente():
     if sucesso:
         print(f'\n{nome_cliente} cadastrado com sucesso no sistema.')
         return True
-    return False
+    else:
+        return False
 
 def selecionar_cliente():
     novo_cliente = selecionar_cliente_bd()

@@ -26,8 +26,7 @@ def consultar_todos_produtos():
     
 def consultar_tamanho_produtos():
     resultado = consultar_tamanho_produtos_bd()
-    if not resultado:
-        print('\nA quantidade de produtos não pôde ser verificada no sistema.')
+    if resultado is None:
         return False
     else:
         return resultado
@@ -50,3 +49,9 @@ def consultar_estoque_final():
     else:
         estoque = [[produto[1], produto[2]] for produto in produtos]
         return estoque
+    
+def atualizar_todo_estoque(produtos):
+    sucesso = atualizar_todo_estoque_bd(produtos)
+    if sucesso:
+        print(f'\nEstoque de produtos atualizado com sucesso!')
+    return sucesso

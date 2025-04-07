@@ -80,3 +80,32 @@ def atualizar_produto_bd(produto):
         return False
     finally:
         desconectar_bd(conn, cursor)
+
+def consultar_produtos_sem_estoque_bd():
+    conn, cursor = None, None
+    try:
+        conn, cursor = abrir_conexao_bd()
+        query = 'SELECT nome, quantidade FROM mercado_at.produto WHERE quantidade = 0'
+        cursor.execute(query)
+        produtos = cursor.fetchall()
+        return produtos
+    except Error as e:
+        print(f'\nERRO: Não foi possível realizar a consulta: {e}.')
+        return []
+    finally:
+        desconectar_bd(conn, cursor)
+
+def atualizar_todo_estoque_bd(produtos):
+    conn, cursor = None, None
+    try:
+        conn, cursor = abrir_conexao_bd()
+        for produto in produtos:
+            query = 'UPDATE mercado_at.produto SET quantidade = %s WHERE id_produto = %s'
+            cursor.execute(query, (produto[4], produto[0]))
+        conn.commit()
+        return True
+    except Error as e:
+        print(f'\nERRO: Não foi possível atualizar o estoque: {e}.')
+        return False
+    finally:
+        desconectar_bd(conn, cursor)
